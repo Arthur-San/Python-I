@@ -26,10 +26,10 @@ salario = float(input('Qual o seu salário? '))
 
 if salario > 1250.00:
     salario += salario * 0.10
-    print(f"Novo salário: R$ {salario} - 10% de aumento")
+    print(f"Novo salário: R$ {salario:.2f} - 10% de aumento")
 elif salario <= 1250.00:
     salario += salario * 0.15
-    print(f"Novo salário: R$ {salario} - 15% de aumento")
+    print(f"Novo salário: R$ {salario:.2f} - 15% de aumento")
 else:
     print('valor inválido')
 
