@@ -9,7 +9,7 @@ print(gameMK)
 print(len(gameMK))
 print(type(gameMK))
 
-# 1 - reccuperar um elemento do dicionário
+# 1 - recuperar um elemento do dicionário
 print(gameMK["name"])
 print(gameMK.get("name"))
 
