@@ -18,106 +18,86 @@
 
 # Este é o exercício de revisão do módulo, então aproveite para utilizar todos os recursos vistos até agora, como os funções, condições, loop, listas, etc.
 
-import pprint
-pp = pprint.PrettyPrinter(depth=4)
+line = '='
 
-linha = '=' #FRUFRU de deixar o menu mais bonito :D
+teams = {}
+done = False
 
-#LIST dos times 
-times = {}
+#função para listar times
+def print_teams():
+    print("Times listados:")
+    for i, team in enumerate(teams.values()):
+        print(f"{i+1}. {team['name']} ({len(team['players'])} jogadores)")
 
-cont = 0
-indiceJog = 0
+#função para listar jogadores de um time
+def print_team_players(team):
+    print(f"Jogadores do {team['name']}")
+    for i, player in enumerate(team['players']):
+        print(f"{i+1}. {player}")
 
-#variável para validar qual função será executada!
-option = -1
+while not done:
+    print(line*30)
+    print('O que você deseja fazer?')
+    print("1. Adicionar Time")
+    print("2. Remover Time")
+    print("3. Listar Times")
+    print("4. Adicionar Jogador em um time")
+    print("5. Remover Jogador de um time")
+    print("6. Listar Jogadores em um time")
+    print("7. Sair")
 
-def adicionaTime(times):
-    global cont  # Declarado cont como global para que possa ser atualizado
+    choice = input('->')
 
-    nomeTime = input('Qual o nome do time?\n')
-
-    times[nomeTime] = {
-        "indice" : cont,
-        "jogadores" : []
-    }
-    
-
-    print(f"Time {nomeTime.upper()} adicionado!")
-
-    cont += 1  # Atualiza o valor de cont globalmente
-
-def removerTime(times):
-    while removerTime != 0:
-        print("Qual time deseja remover? ")
-        pp.pprint(f"Times cadastrados: {times}")
-        timeRemover = input()
-
-        if timeRemover in times:
-            del times[timeRemover]
-            print(f"Time ->{timeRemover.upper()}<- removido!")
-            break
+    if choice == '1':
+        team_name = input('Digite o nome do time: ')
+        teams[team_name] = {'name': team_name, 'players': [] }
+        print('Time adicionado')
+    elif choice == '2':
+        print_teams()
+        team_num = int(input('Infome o número do time que deseja remover\n'))
+        if team_num <= len(teams):
+            team_name = list((teams.keys())) [team_num -1]
+            del teams[team_name]
+            print('Time removido')
         else:
-            print('Time não existe!\nVerifique novamente os times cadastrados!\n')
-            print(linha*30)
+            print('Número do time inválido!')
+    elif choice == '3':
+        print_teams()
+    elif choice == '4':
+        print_teams()
+        team_num = int(input("Informe o número do time que deseja adicionar o jogador\n"))
+        if team_num <= len(teams):
+            team_name = list((teams.keys())) [team_num -1]
+            player_name = input("Informe o nome do jogador\n")
+            teams[team_name]['players'].append(player_name)
+            print("Jogador adicionado no time!")
+        else:
+            print("Número do time inválido")
+    elif choice == '5':
+        print_teams()
+        team_num = int(input("Informe o número do time que deseja adicionar o jogador\n"))
+        if team_num <= len(teams):
+            team_name = list((teams.keys())) [team_num -1]
+            player_num = int(input("Informe o número do jogador que deseja remover"))
+            if player_num <= len(teams[team_name]['players']):
+                del teams[team_name]['players'][player_num -1]
+                print('Jogador removido do time!')
+            else:
+                print('Número do jogador inválido!')
+        else:
+            print('Número do time inválido!')
+    elif choice == '6':
+        print_teams()
+        team_num = int(input("Informe o número do time que deseja listar o jogador\n"))
+        if team_num <= len(teams):
+            team_name = list((teams.keys())) [team_num -1]
+            print_team_players(teams[team_name])
+        else:
+            print('Número do time inválido')
+    elif choice == '7':
+        done = True
+    else:
+        print('Opção inválida!')
 
-    
-        
-    print(linha*30)
-
-def listarTimes(times):
-
-    print(times)
-
-def adicionarJogador(times):
-    global indiceJog
-    print('Em qual time deseja adicionar? \n', times)
-    selecionaTime = input()
-
-    nomeJogador = input('Qual o nome do jogador?')
-    
-    times[selecionaTime]["jogadores"] = {
-        indiceJog : "indice",
-        "nome" : nomeJogador
-    }
-
-    indiceJog += 1
 
 
-
-
-
-
-while option != '0':
-    print(linha*15 , " MENU ", linha*15)
-    print("""
-Escolha uma opção
-          
-1 - Adicionar Time
-2 - Remover Time
-3 - Listar Times
-4 - Adicionar Jogador          
-0 - Sair
-          """)
-    
-    option = input('->')
-    
-    if option == '1':
-        adicionaTime(times)
-    
-    elif option == '2':
-        removerTime(times)
-    
-    elif option == '3':
-        listarTimes(times)
-    
-    elif option == '4':
-        adicionarJogador(times)
-    
-    elif option == '0':
-        print("programa encerrado!")
-
-    #valores difentes dos informados será redirecionado para escolher um existente 
-    else: 
-        print('Valor inválido! Tente novamente!')
-        option = -1
