@@ -8,6 +8,7 @@
 # - Adicionar jogador em um time
 # - Remover jogador de um time
 # - Listar jogadores de um time
+
 # 1. A opção de listar os times deve mostrar o índice, o nome e a quantidade de jogadores do time.
 # 2. A opção de adicionar um time deve pedir um nome para o time que será cadastrado.
 # 3. A opção de remover um time deve pedir o índice específico do time que foi cadastrado para fazer a sua exclusão.
@@ -26,6 +27,7 @@ linha = '=' #FRUFRU de deixar o menu mais bonito :D
 times = {}
 
 cont = 0
+indiceJog = 0
 
 #variável para validar qual função será executada!
 option = -1
@@ -35,25 +37,53 @@ def adicionaTime(times):
 
     nomeTime = input('Qual o nome do time?\n')
 
-    times[cont] = nomeTime
+    times[nomeTime] = {
+        "indice" : cont,
+        "jogadores" : []
+    }
+    
 
     print(f"Time {nomeTime.upper()} adicionado!")
 
     cont += 1  # Atualiza o valor de cont globalmente
 
 def removerTime(times):
-    print("Qual time deseja remover? ")
-    print(f"Times cadastrados: {times}")
-    timeRemover = input()
+    while removerTime != 0:
+        print("Qual time deseja remover? ")
+        pp.pprint(f"Times cadastrados: {times}")
+        timeRemover = input()
 
-    if timeRemover in times:
+        if timeRemover in times:
             del times[timeRemover]
-    print(f"Time ->{timeRemover.upper()}<- removido!")
+            print(f"Time ->{timeRemover.upper()}<- removido!")
+            break
+        else:
+            print('Time não existe!\nVerifique novamente os times cadastrados!\n')
+            print(linha*30)
+
+    
         
     print(linha*30)
 
 def listarTimes(times):
+
     print(times)
+
+def adicionarJogador(times):
+    global indiceJog
+    print('Em qual time deseja adicionar? \n', times)
+    selecionaTime = input()
+
+    nomeJogador = input('Qual o nome do jogador?')
+    
+    times[selecionaTime]["jogadores"] = {
+        indiceJog : "indice",
+        "nome" : nomeJogador
+    }
+
+    indiceJog += 1
+
+
 
 
 
@@ -66,6 +96,7 @@ Escolha uma opção
 1 - Adicionar Time
 2 - Remover Time
 3 - Listar Times
+4 - Adicionar Jogador          
 0 - Sair
           """)
     
@@ -80,6 +111,9 @@ Escolha uma opção
     elif option == '3':
         listarTimes(times)
     
+    elif option == '4':
+        adicionarJogador(times)
+    
     elif option == '0':
         print("programa encerrado!")
 
@@ -87,8 +121,3 @@ Escolha uma opção
     else: 
         print('Valor inválido! Tente novamente!')
         option = -1
-
-
-
-
-
